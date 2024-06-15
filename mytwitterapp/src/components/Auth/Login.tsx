@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { fireAuth } from "./FirebaseConfig";
-
+import { UserInfo } from "../../types"; 
 const URL :string = "http://localhost:8080"
+
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -32,20 +33,10 @@ const LoginForm: React.FC = () => {
         if (!response.ok) {
             throw new Error("FAiled to send auth request");
         }
-        const data = await response.json();
+        const data :UserInfo = await response.json();
         console.log("Auth request sent successfully",data);
     }catch (error){
         console.error("Error sending auth request", error)
-    }
-  };
-  const handleLogout = async () => {
-    try {
-      await fireAuth.signOut();
-      setLoggedInEmail(null);
-      alert('Logged out successfully!');
-      ResetForm();
-    } catch (error) {
-      setError('Failed to log out. Please try again.');
     }
   };
   const ResetForm = () => {
@@ -87,7 +78,6 @@ const LoginForm: React.FC = () => {
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit">ログイン</button>
       </form>
-      <button onClick={handleLogout}>ログアウト</button>
       {loggedInEmail && <p>{loggedInEmail} がログインしました。</p>}
     </div>
   );
