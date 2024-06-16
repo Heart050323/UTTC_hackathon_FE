@@ -4,14 +4,21 @@ export type UserInfo = {
     tweet_datas: TweetData[];
 }
 
-type TweetData = {
+export type TweetData = {
+    user_id: number;
+    user_name:string;
     tweet_id: number;
     content: string;
     replied_tweet_id: number;
     re_tweet_id: number;
     created_at: Date;
+    likecount: number;
 }
 
 export type HomePageProps = {
-    email: string | null;
+    data: UserInfo | null;
+}
+
+export type PostPageProps = {
+    data: UserInfo | null;
 }

@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { fireAuth } from "./FirebaseConfig";
-import { UserInfo } from "../../types"; 
-const URL :string = "http://localhost:8080"
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -15,28 +13,9 @@ const LoginForm: React.FC = () => {
     try {
       await fireAuth.signInWithEmailAndPassword(email, password);
       alert('Logged in successfully!');
-      await sendAuthRequest(email);
       ResetForm();
     } catch (error) {
       setError('Failed to log in. Please check your email and password.');
-    }
-  };
-  const sendAuthRequest = async (email:string) => {
-    try {
-        const response = await fetch(URL + "/auth" , {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: email}),
-        });
-        if (!response.ok) {
-            throw new Error("FAiled to send auth request");
-        }
-        const data :UserInfo = await response.json();
-        console.log("Auth request sent successfully",data);
-    }catch (error){
-        console.error("Error sending auth request", error)
     }
   };
   const ResetForm = () => {

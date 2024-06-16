@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { fireAuth } from './FirebaseConfig';
 
-const URL :string = "http://localhost:8080"
+ 
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -22,7 +22,7 @@ const RegisterForm: React.FC = () => {
   };
   const sendRegisterRequest = async (email:string , username:string) => {
     try {
-        const response = await fetch(URL + "/register" , {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/register" , {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
