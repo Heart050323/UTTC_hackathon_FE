@@ -15,7 +15,7 @@ const HomePage: React.FC<HomePageProps> = ({data}) => {
           <p>Logged in as: {data.user_name}</p>
         </div>
       )}
-      <br></br><TweetList/>
+      <br></br><TweetList user_id = {data?.user_id}/>
       <LogoutForm /><Link to='/post'>New Tweet</Link>
     </div>
   );

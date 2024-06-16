@@ -1,18 +1,22 @@
 import React, {useState} from 'react';
 import { PostPageProps } from '../../types';
- 
+import { useNavigate } from 'react-router-dom';
+
 const TweetForm :React.FC<PostPageProps> = ({data}) => { 
     const [senderUserID,setSenderUserID] = useState<number>(0);
     const [content, setContent] = useState<string>('');
     const [repliedTweetID, setRepliedTweetID] = useState<number>(0);
     const [reTweetID, setReTweetID] = useState<number>(0);
     const [error, setError] = useState<string>('');
+    const navigate = useNavigate();
 
     const handlePost = async (event: React.FormEvent) => {
         event.preventDefault();
         setError('');
         try{
             await PostRequest(senderUserID, content, repliedTweetID,reTweetID);
+            alert("Tweetを投稿しました。");
+            navigate('/')
         }catch (error) {
             setError('Failed to Post')
         }
@@ -39,15 +43,16 @@ const TweetForm :React.FC<PostPageProps> = ({data}) => {
         <div>
             {data && (
         <div>
-          <p>Logged in as: {data.user_name}</p>
+        <p>Logged in as: {data.user_name}</p>
         </div>
-      )}
+    )}
             <form onSubmit={handlePost}>
                 <div>
                     <textarea onChange={(e) => setContent(e.target.value)} required></textarea>
                     <button type = "submit">投稿</button>
                 </div>
             </form>
+            {error && <p>{error}</p>}
         </div>
     );
 };

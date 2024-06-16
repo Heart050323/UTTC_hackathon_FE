@@ -22,3 +22,12 @@ export type HomePageProps = {
 export type PostPageProps = {
     data: UserInfo | null;
 }
+
+export type UserIDProps = {
+    user_id: number | undefined;
+}
+
+export type TweetItemProps = {
+    sender_user_id: number | undefined;
+    tweet:TweetData
+}

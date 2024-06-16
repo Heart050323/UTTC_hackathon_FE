@@ -1,8 +1,8 @@
 import React, { useEffect,useState } from 'react';
-import {TweetData} from '../../types'
- 
+import {TweetData, UserIDProps} from '../../types'
+import {GoodButton, ReplyButton} from './TweetItem'
 
-export const TweetList: React.FC = ()=> {
+export const TweetList: React.FC<UserIDProps> = ({user_id})=> {
     const [tweetdata, setTweetData] = useState<TweetData[] | null>(null);
     const [loading, setLoading] = useState(false);
     const [selectedTweetID, setSelectedTweetID] = useState<number | null>(null);
@@ -30,6 +30,15 @@ export const TweetList: React.FC = ()=> {
     };
         sendTweetListRequest();
     },[]);
+
+    const toggleReplyView = (tweetID: number) => {
+        if (selectedTweetID === tweetID) {
+            setSelectedTweetID(null);
+        } else {
+            setSelectedTweetID(tweetID);
+        }
+    };
+
     return (
         <div>
             {loading && <p>Loading...</p>}
@@ -39,16 +48,19 @@ export const TweetList: React.FC = ()=> {
                         <p>User: {tweet.user_name}</p>
                         <p>Content: {tweet.content}</p>
                         <p>{new Date(tweet.created_at).toLocaleString()}</p>
-                        <button onClick={() => setSelectedTweetID(tweet.tweet_id)}>View Reply</button>
+                        <ReplyButton sender_user_id = {user_id} tweet = {tweet}/> <GoodButton sender_user_id = {user_id} tweet = {tweet}/>
+                        <button onClick={() => toggleReplyView(tweet.tweet_id)}>
+                            {selectedTweetID === tweet.tweet_id ? 'Close Reply' : 'View Reply'}</button>
+                            {selectedTweetID === tweet.tweet_id && <ReplyTweetList replied_tweet_id={selectedTweetID} user_id = {user_id}/>}
                     </div>
                 ))
             )}
-            {selectedTweetID && <ReplyTweetList replied_tweet_id = {selectedTweetID}/>}
         </div>
         );
     };
 
-const ReplyTweetList: React.FC<{ replied_tweet_id: number }> = ({ replied_tweet_id })  => {
+const ReplyTweetList: React.FC<{ replied_tweet_id: number, user_id: number | undefined}> = ({ replied_tweet_id ,user_id})  => {
+    const [selectedTweetID, setSelectedTweetID] = useState<number | null>(null);
     const [replyTweetData, setReplyTweetData] = useState<TweetData[] | null>(null);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
@@ -76,6 +88,13 @@ const ReplyTweetList: React.FC<{ replied_tweet_id: number }> = ({ replied_tweet_
     };
         sendReplyTweetListRequest();
     },[replied_tweet_id]);
+    const toggleReplyView = (tweetID: number) => {
+        if (selectedTweetID === tweetID) {
+            setSelectedTweetID(null);
+        } else {
+            setSelectedTweetID(tweetID);
+        }
+    };
     return (
         <div>
             {loading && <p>Loading...</p>}
@@ -85,7 +104,10 @@ const ReplyTweetList: React.FC<{ replied_tweet_id: number }> = ({ replied_tweet_
                         <p>User: {tweet.user_name}</p>
                         <p>Content: {tweet.content}</p>
                         <p>{new Date(tweet.created_at).toLocaleString()}</p>
-                        {tweet.replied_tweet_id && <button onClick={() => ReplyTweetList({replied_tweet_id: tweet.replied_tweet_id})}>View Reply</button>}
+                        <ReplyButton sender_user_id = {user_id} tweet = {tweet}/> <GoodButton sender_user_id = {user_id} tweet = {tweet}/>
+                        <button onClick={() => toggleReplyView(tweet.tweet_id)}>
+                            {selectedTweetID === tweet.tweet_id ? 'Close Reply' : 'View Reply'}</button>
+                            {selectedTweetID === tweet.tweet_id && <ReplyTweetList replied_tweet_id={selectedTweetID} user_id={user_id}/>}
                     </div>
                 ))
             ) : (<p></p>)}
