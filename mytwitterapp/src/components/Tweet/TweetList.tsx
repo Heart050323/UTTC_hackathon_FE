@@ -21,7 +21,7 @@ export const TweetList: React.FC<UserIDProps> = ({user_id})=> {
                 }
                 const tweetdata :[TweetData] = await response.json();
                 setTweetData(tweetdata);
-                console.log("tweetlist sent successfully",tweetdata);
+                console.log("tweetlist sent successfully");
             }catch (error){
                 console.error("Error sending tweetlist request", error);
             }finally{

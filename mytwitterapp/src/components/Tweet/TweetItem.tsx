@@ -1,6 +1,6 @@
 import { TweetItemProps } from "../../types";
 import { useNavigate } from 'react-router-dom';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 export const ReplyButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> {
     const [showForm, setShowForm] = useState<boolean>(false);
@@ -25,8 +25,6 @@ export const ReplyButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> 
         }
     };
     const PostRequest = async (senderUserID:number | undefined, content:string, repliedTweetID:number,reTweetID:number) => {
-        senderUserID = sender_user_id;
-        repliedTweetID = tweet.tweet_id;
 
         try {
             const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/post" , {
@@ -61,5 +59,67 @@ export const ReplyButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> 
 };
 
 export const GoodButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> {
-    return <>GoodButton{sender_user_id && <>{sender_user_id}</>},{tweet && <>{tweet.content}</>}</>
+    const [valuationType,setValuationType] = useState<number | undefined>(0); //この値は役に立っているのかどうか聞いてみる。
+    const [likecount, setLikecount] = useState<number>(0);
+    useEffect(() => {
+        ConfirmValuationType(sender_user_id, tweet.tweet_id);
+        setLikecount(tweet.likecount);
+    }, [sender_user_id, tweet.tweet_id,tweet.likecount]);
+    const ConfirmValuationType = async (senderUserID: number | undefined, tweetID: number) => {
+        try {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/confirmValuationType" , {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ tweet_id : tweetID, sender_user_id: senderUserID })
+            });
+            if (!response.ok) {
+                throw new Error("Failed to ConfirmValuationType request");
+            }
+            const data  = await response.json();
+            const valuation_type: number | undefined = data.valuation_type;
+            setValuationType(valuation_type);
+            console.log("Confirm Valuation request sent successfully",valuation_type,data.valuation_type,valuationType);
+        }catch (error){
+            console.error("Error sending Valuation request")
+        };
     };
+
+    const ValuationRequest = async (senderUserID: number | undefined, tweetID: number, valuationType : number | undefined) => {
+        try {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/valuation" , {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ tweet_id : tweetID, sender_user_id: senderUserID, valuation_type:  valuationType})
+            });
+            if (!response.ok) {
+                throw new Error("Failed to Valuation request");
+            }
+            console.log("Valuation request sent successfully valuationTypeはこれになりました：",valuationType);
+            setValuationType(valuationType);
+            if (valuationType != undefined){
+                setLikecount(likecount + valuationType);
+            }
+        }catch (error){
+            console.error("Error sending Valuation request",error)
+        };
+    };
+    
+    const handleButtonClick = () => {
+        const newValuationType = valuationType === 1 ? -1 : 1;
+        ValuationRequest(sender_user_id, tweet.tweet_id, newValuationType);
+        console.log("新しく次のvaluationにします。",newValuationType);
+    };
+
+    return (
+        <div>
+            <button onClick={handleButtonClick}>
+                {valuationType === 1 ? "いいねを解除する" : "いいねする"}
+            </button>
+            {likecount}
+        </div>
+    );
+}
