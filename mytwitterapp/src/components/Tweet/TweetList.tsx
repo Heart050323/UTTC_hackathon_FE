@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react';
 import {TweetData, UserIDProps} from '../../types'
-import {GoodButton, ReplyButton} from './TweetItem'
+import {ValuationButton, ReplyButton} from './TweetItem'
 import './TweetStyles.css';
 
 export const TweetList: React.FC<UserIDProps> = ({user_id})=> {
@@ -50,7 +50,7 @@ export const TweetList: React.FC<UserIDProps> = ({user_id})=> {
                         <p className='tweet-content'>Content: {tweet.content}</p>
                         <p className='tweet-time'>{new Date(tweet.created_at).toLocaleString()}</p>
                         <ReplyButton sender_user_id = {user_id} tweet = {tweet}/> 
-                        <GoodButton sender_user_id = {user_id} tweet = {tweet}/>
+                        <ValuationButton sender_user_id = {user_id} tweet = {tweet}/>
                         <button className='viewReply-button' onClick={() => toggleReplyView(tweet.tweet_id)}>
                             {selectedTweetID === tweet.tweet_id ? 'Close Reply' : 'View Reply'}</button>
                             {selectedTweetID === tweet.tweet_id && <ReplyTweetList replied_tweet_id={selectedTweetID} user_id = {user_id}/>}
@@ -107,7 +107,7 @@ const ReplyTweetList: React.FC<{ replied_tweet_id: number, user_id: number | und
                         <p className='tweet-content'>Content: {tweet.content}</p>
                         <p className='tweet-time'>{new Date(tweet.created_at).toLocaleString()}</p>
                         <ReplyButton sender_user_id = {user_id} tweet = {tweet}/>
-                        <GoodButton sender_user_id = {user_id} tweet = {tweet}/>
+                        <ValuationButton sender_user_id = {user_id} tweet = {tweet}/>
                         <button className='viewReply-botton' onClick={() => toggleReplyView(tweet.tweet_id)}>
                             {selectedTweetID === tweet.tweet_id ? 'Close Reply' : 'View Reply'}</button>
                             {selectedTweetID === tweet.tweet_id && <ReplyTweetList replied_tweet_id={selectedTweetID} user_id={user_id}/>}
