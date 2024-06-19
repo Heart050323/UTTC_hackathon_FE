@@ -1,6 +1,8 @@
 import { TweetItemProps } from "../../types";
 import { useNavigate } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
+import './TweetStyles.css';
+import { FaHeart,FaReply} from 'react-icons/fa';
 
 export const ReplyButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> {
     const [showForm, setShowForm] = useState<boolean>(false);
@@ -44,12 +46,14 @@ export const ReplyButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> 
     };
     return(
         <div>
-            <button onClick={() => setShowForm(!showForm)}>reply</button>
+            <button className="reply-button" onClick={() => setShowForm(!showForm)}>
+                <FaReply/>
+            </button>
             {showForm && (
-                <form onSubmit={handlePost}>
+                <form onSubmit={handlePost} className="reply-form">
                     <div>
                         <textarea value = {content} onChange={(e) => setContent(e.target.value)} required></textarea>
-                        <button type = "submit">送信</button>
+                        <button className="send-button" type = "submit">送信</button>
                     </div>
                 </form>
             )}
@@ -115,9 +119,9 @@ export const GoodButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> {
     };
 
     return (
-        <div>
-            <button onClick={handleButtonClick}>
-                {valuationType === 1 ? "いいねを解除する" : "いいねする"}
+        <div className="good-button-container">
+            <button onClick={handleButtonClick} className={`heart-button ${valuationType === 1 ? 'liked' : ''}`}>
+                <FaHeart/>
             </button>
             {likecount}
         </div>

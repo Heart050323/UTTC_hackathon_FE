@@ -1,0 +1,54 @@
+.form {
+    width: 100%;
+}
+.form h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #1da1f2;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.button:hover {
+    background-color: #0d8bd4;
+}
+
+.logged-in-message {
+    margin-top: 1rem;
+    color: #333;
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { fireAuth } from "./FirebaseConfig";
-
+import './Auth.css';
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -33,10 +33,10 @@ const LoginForm: React.FC = () => {
     return () => unsubscribe();
   }, []);
   return (
-    <div>
+    <div className="form">
       <h2>ログイン</h2>
       <form onSubmit={handleLogin}>
-        <div>
+        <div className="form-group">
           <label>メールアドレス:</label>
           <input
             type="email"
@@ -45,7 +45,7 @@ const LoginForm: React.FC = () => {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>パスワード:</label>
           <input
             type="password"
@@ -54,10 +54,10 @@ const LoginForm: React.FC = () => {
             required
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">ログイン</button>
+        {error && <p className="error-message">{error}</p>}
+        <button type="submit" className="button">ログイン</button>
       </form>
-      {loggedInEmail && <p>{loggedInEmail} がログインしました。</p>}
+      {loggedInEmail && <p className="logged-in-message">{loggedInEmail} がログインしました。</p>}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { PostPageProps } from '../../types';
 import { useNavigate } from 'react-router-dom';
-
+import './TweetStyles.css'
 const TweetForm :React.FC<PostPageProps> = ({data}) => { 
     const [senderUserID,setSenderUserID] = useState<number>(0);
     const [content, setContent] = useState<string>('');
@@ -40,20 +40,28 @@ const TweetForm :React.FC<PostPageProps> = ({data}) => {
         };
     };
     return(
-        <div>
+        <div className="tweet-form-container">
+        <form id="tweet-form" onSubmit={handlePost}>
+            <div className="tweet-form-textarea">
             {data && (
-        <div>
-        <p>Logged in as: {data.user_name}</p>
-        </div>
-    )}
-            <form onSubmit={handlePost}>
-                <div>
-                    <textarea onChange={(e) => setContent(e.target.value)} required></textarea>
-                    <button type = "submit">投稿</button>
+                <div className="tweet-form-user">
+                <p>{data.user_name}</p>
                 </div>
-            </form>
-            {error && <p>{error}</p>}
-        </div>
+            )}
+            <div className="tweet-form-group">
+                <textarea
+                placeholder="What's happening?"
+                onChange={(e) => setContent(e.target.value)}
+                required
+                ></textarea>
+            </div>
+            </div>
+            {error && <p className="tweet-form-error">{error}</p>}
+            <div className="tweet-form-group">
+            <button type="submit">投稿</button>
+            </div>
+        </form>
+    </div>
     );
 };
 export default TweetForm

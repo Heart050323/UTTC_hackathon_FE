@@ -3,20 +3,66 @@ import {HomePageProps, UserInfo} from '../types';
 import {TweetList} from '../components/Tweet/TweetList'
 import LogoutForm from '../components/Auth/Logout'
 import { Link } from 'react-router-dom';
-
+import {FaPlus} from 'react-icons/fa';
+import './HomePage.css';
 const HomePage: React.FC<HomePageProps> = ({data}) => {
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let lastScrollY = 0;
+    let lastTimestamp = performance.now();
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const currentTimestamp = performance.now();
+      const scrollDelta = currentScrollY - lastScrollY;
+      const timeDelta = currentTimestamp - lastTimestamp;
+
+      const speed = Math.abs(scrollDelta / timeDelta) * 1000; // pixels per second
+
+      // Check if we're at the top and scrolling fast
+      if (currentScrollY === 0 && speed > 1000) { // Adjust speed threshold as needed
+        setLoading(true);
+        // Simulate a fetch call
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000); // Adjust the time as needed
+      }
+
+      lastScrollY = currentScrollY;
+      lastTimestamp = currentTimestamp;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div>
-      <h1>Welcome to the Homepage!</h1>
-      {loading && <p>Loading...</p>}
-      {data && (
-        <div>
-          <p>Logged in as: {data.user_name}</p>
+      <div className='header'>
+        <div className='header-left'>
+          <h1>Welcome to Twitter!</h1>
+        </div>
+        <div className='header-right'>
+          {data && (
+            <div>
+              <p className='user-name'>Logged in as: {data.user_name}</p>
+            </div>
+          )}
+          <LogoutForm />
+          <Link to='/post' className='new-tweet-button'>
+            <FaPlus size={30} />
+          </Link>
+        </div>
+      </div>
+      <div className='content'>
+        <TweetList user_id={data?.user_id} />
+      </div>
+      {loading && (
+        <div className="loading-spinner-container">
+          <div className="loading-spinner"></div>
         </div>
       )}
-      <br></br><TweetList user_id = {data?.user_id}/>
-      <LogoutForm /><Link to='/post'>New Tweet</Link>
     </div>
   );
 };

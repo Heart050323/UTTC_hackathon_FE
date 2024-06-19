@@ -1,7 +1,6 @@
 export type UserInfo = {
     user_id: number;
     user_name: string;
-    tweet_datas: TweetData[];
 }
 
 export type TweetData = {

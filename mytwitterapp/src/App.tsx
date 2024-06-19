@@ -15,10 +15,10 @@ const App: React.FC = () => {
   const [data, setData] = useState<UserInfo | null>(null);
   const navigate = useNavigate();
   useEffect(() => {
-    const sendPastTweetRequest = async (email:string | null) => {
+    const sendUserInfoRequest = async (email:string | null) => {
       setLoading(true);
       try {
-          const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/pasttweet" , {
+          const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/userinfo" , {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ const App: React.FC = () => {
               body: JSON.stringify({ email: email}),
           });
           if (!response.ok) {
-              throw new Error("FAiled to send past tweet request");
+              throw new Error("Failed to send userinfo request");
           }
           const data :UserInfo = await response.json();
           setData(data);
@@ -39,7 +39,7 @@ const App: React.FC = () => {
     };
 
     if (email) {
-      sendPastTweetRequest(email);
+      sendUserInfoRequest(email);
     }
   },[email]);
   useEffect(() => {
@@ -59,7 +59,9 @@ const App: React.FC = () => {
   },[]);
 
   if (loading) {
-    return <div>Loading...</div>
+    return    <div className="loading-spinner-container">
+              <div className="loading-spinner"></div>
+              </div>
   }
   return (
     <Routes>
@@ -72,7 +74,6 @@ const App: React.FC = () => {
 };
 const Root: React.FC = () => (
   <BrowserRouter>
-    <h1>Twitter</h1>
     <App />
   </BrowserRouter>
 );

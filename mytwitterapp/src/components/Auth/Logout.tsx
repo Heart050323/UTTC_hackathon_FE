@@ -21,7 +21,7 @@ const LogoutForm: React.FC = () => {
         setPassword('');
     };
     return (
-        <button onClick={handleLogout}>ログアウト</button>
+        <button className="button" onClick={handleLogout}>ログアウト</button>
     );
 };
 export default LogoutForm

@@ -1,6 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import {TweetData, UserIDProps} from '../../types'
 import {GoodButton, ReplyButton} from './TweetItem'
+import './TweetStyles.css';
 
 export const TweetList: React.FC<UserIDProps> = ({user_id})=> {
     const [tweetdata, setTweetData] = useState<TweetData[] | null>(null);
@@ -40,16 +41,17 @@ export const TweetList: React.FC<UserIDProps> = ({user_id})=> {
     };
 
     return (
-        <div>
+        <div className="container">
             {loading && <p>Loading...</p>}
             {tweetdata && (
                 tweetdata.map((tweet) => (
-                    <div key={tweet.tweet_id} style={{ backgroundColor: '#f0f0f0', padding: '10px', margin: '10px 0' }}>
-                        <p>User: {tweet.user_name}</p>
-                        <p>Content: {tweet.content}</p>
-                        <p>{new Date(tweet.created_at).toLocaleString()}</p>
-                        <ReplyButton sender_user_id = {user_id} tweet = {tweet}/> <GoodButton sender_user_id = {user_id} tweet = {tweet}/>
-                        <button onClick={() => toggleReplyView(tweet.tweet_id)}>
+                    <div key={tweet.tweet_id} className="tweet">
+                        <p className="tweet-user">User: {tweet.user_name}</p>
+                        <p className='tweet-content'>Content: {tweet.content}</p>
+                        <p className='tweet-time'>{new Date(tweet.created_at).toLocaleString()}</p>
+                        <ReplyButton sender_user_id = {user_id} tweet = {tweet}/> 
+                        <GoodButton sender_user_id = {user_id} tweet = {tweet}/>
+                        <button className='viewReply-button' onClick={() => toggleReplyView(tweet.tweet_id)}>
                             {selectedTweetID === tweet.tweet_id ? 'Close Reply' : 'View Reply'}</button>
                             {selectedTweetID === tweet.tweet_id && <ReplyTweetList replied_tweet_id={selectedTweetID} user_id = {user_id}/>}
                     </div>
@@ -96,16 +98,17 @@ const ReplyTweetList: React.FC<{ replied_tweet_id: number, user_id: number | und
         }
     };
     return (
-        <div>
+        <div className='reply-container'>
             {loading && <p>Loading...</p>}
             {replyTweetData && replyTweetData.length > 0 ? (
                 replyTweetData.map((tweet) => (
-                    <div key={tweet.tweet_id}>
-                        <p>User: {tweet.user_name}</p>
-                        <p>Content: {tweet.content}</p>
-                        <p>{new Date(tweet.created_at).toLocaleString()}</p>
-                        <ReplyButton sender_user_id = {user_id} tweet = {tweet}/> <GoodButton sender_user_id = {user_id} tweet = {tweet}/>
-                        <button onClick={() => toggleReplyView(tweet.tweet_id)}>
+                    <div key={tweet.tweet_id} className='tweet'>
+                        <p className='tweet-user'>User: {tweet.user_name}</p>
+                        <p className='tweet-content'>Content: {tweet.content}</p>
+                        <p className='tweet-time'>{new Date(tweet.created_at).toLocaleString()}</p>
+                        <ReplyButton sender_user_id = {user_id} tweet = {tweet}/>
+                        <GoodButton sender_user_id = {user_id} tweet = {tweet}/>
+                        <button className='viewReply-botton' onClick={() => toggleReplyView(tweet.tweet_id)}>
                             {selectedTweetID === tweet.tweet_id ? 'Close Reply' : 'View Reply'}</button>
                             {selectedTweetID === tweet.tweet_id && <ReplyTweetList replied_tweet_id={selectedTweetID} user_id={user_id}/>}
                     </div>

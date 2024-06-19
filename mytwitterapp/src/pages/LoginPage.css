@@ -1,0 +1,32 @@
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
+.login-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.app-title {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #333;
+}
+.register-link {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+.register-link a {
+    color: #1da1f2;
+    text-decoration: none;
+}
+.register-link a:hover {
+    text-decoration: underline;
+}

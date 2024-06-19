@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { fireAuth } from './FirebaseConfig';
-
- 
+import './Auth.css';
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -42,10 +41,10 @@ const RegisterForm: React.FC = () => {
     setPassword('');
   }
   return (
-    <div>
+    <div className='form'>
       <h2>新規登録</h2>
       <form onSubmit={handleRegister}>
-        <div>
+        <div className='form-group'>
           <label>新規メールアドレス:</label>
           <input
             type="email"
@@ -54,7 +53,7 @@ const RegisterForm: React.FC = () => {
             required
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label>新規パスワード:</label>
           <input
             type="password"
@@ -63,7 +62,7 @@ const RegisterForm: React.FC = () => {
             required
           />
         </div>
-        <div>
+        <div className='form-group'>
           <label>ユーザーネーム:</label>
           <input
             type="text"
@@ -72,8 +71,8 @@ const RegisterForm: React.FC = () => {
             required
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">登録</button>
+        {error && <p className='error-message'>{error}</p>}
+        <button type="submit" className='button'>登録</button>
       </form>
     </div>
   );
