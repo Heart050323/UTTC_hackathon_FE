@@ -121,9 +121,10 @@ button.send-button:hover{
 .good-button-container {
     display: flex;
     align-items: center;
+    margin-right: 10px; /* good-buttonとbad-buttonの間にスペースを作るために追加 */
 }
 
-.heart-button {
+.good-button {
     background: none;
     border: none;
     cursor: pointer;
@@ -132,12 +133,39 @@ button.send-button:hover{
     transition: color 0.3s ease;
 }
 
-.heart-button.liked {
+.good-button.liked {
     color: red;
 }
 
-.heart-button:hover {
+.good-button:hover {
     color: rgb(242, 122, 122);
+}
+
+.bad-button-container {
+    display: flex;
+    align-items: center;
+}
+
+.bad-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: rgba(188, 188, 188, 0.842);
+    transition: color 0.3s ease;
+}
+
+.bad-button.hated {
+    color: blue;
+}
+
+.bad-button:hover {
+    color: rgb(122, 122, 242);
+}
+
+.button-container {
+    display: flex; /* 親コンテナをフレックスボックスにして、子要素を隣り合わせに配置 */
+    align-items: center;
 }
 
 

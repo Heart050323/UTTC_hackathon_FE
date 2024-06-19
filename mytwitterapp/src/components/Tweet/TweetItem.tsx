@@ -2,7 +2,7 @@ import { TweetItemProps } from "../../types";
 import { useNavigate } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import './TweetStyles.css';
-import { FaHeart,FaReply} from 'react-icons/fa';
+import { FaReply,FaThumbsUp,FaThumbsDown} from 'react-icons/fa';
 
 export const ReplyButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> {
     const [showForm, setShowForm] = useState<boolean>(false);
@@ -62,13 +62,15 @@ export const ReplyButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> 
     );
 };
 
-export const GoodButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> {
+export const ValuationButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> {
     const [valuationType,setValuationType] = useState<number | undefined>(0); //この値は役に立っているのかどうか聞いてみる。
     const [likecount, setLikecount] = useState<number>(0);
+    const [badcount,  setBadcount ] = useState<number>(0);
     useEffect(() => {
         ConfirmValuationType(sender_user_id, tweet.tweet_id);
         setLikecount(tweet.likecount);
-    }, [sender_user_id, tweet.tweet_id,tweet.likecount]);
+        setBadcount(tweet.badcount);
+    }, [sender_user_id, tweet.tweet_id,tweet.likecount,tweet.badcount]);
     const ConfirmValuationType = async (senderUserID: number | undefined, tweetID: number) => {
         try {
             const response = await fetch(process.env.REACT_APP_BACKEND_URL + "/confirmValuationType" , {
@@ -97,33 +99,82 @@ export const GoodButton: React.FC<TweetItemProps> = ({sender_user_id,tweet})=> {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ tweet_id : tweetID, sender_user_id: senderUserID, valuation_type:  valuationType})
+                body: JSON.stringify({ tweet_id : tweetID, sender_user_id: senderUserID, valuation_type: valuationType})
             });
             if (!response.ok) {
                 throw new Error("Failed to Valuation request");
             }
-            console.log("Valuation request sent successfully valuationTypeはこれになりました：",valuationType);
-            setValuationType(valuationType);
-            if (valuationType != undefined){
-                setLikecount(likecount + valuationType);
-            }
-        }catch (error){
+            console.log("Valuation request sent successfully valuationTypeはこれになりました",valuationType);
+            return valuationType;
+        }catch (error){ 
             console.error("Error sending Valuation request",error)
+            return null;
         };
     };
     
-    const handleButtonClick = () => {
-        const newValuationType = valuationType === 1 ? -1 : 1;
-        ValuationRequest(sender_user_id, tweet.tweet_id, newValuationType);
-        console.log("新しく次のvaluationにします。",newValuationType);
+    const handleGoodButtonClick = async () => {
+        if (valuationType === 1) {
+            // いいねを解除する
+            const result = await ValuationRequest(sender_user_id, tweet.tweet_id, -1);
+            if (result === -1) {
+                setLikecount(likecount - 1);
+                setValuationType(0);
+            }
+        } else {
+            if (valuationType === 2) {
+                // まずバッド評価を解除
+                const result = await ValuationRequest(sender_user_id, tweet.tweet_id, -2);
+                if (result === -2) {
+                    setBadcount(badcount - 1);
+                }
+            }
+            // 次にいいねを設定
+            const result = await ValuationRequest(sender_user_id, tweet.tweet_id, 1);
+            if (result === 1) {
+                setLikecount(likecount + 1);
+                setValuationType(1);
+            }
+        }
     };
 
+    const handleBadButtonClick = async () => {
+        if (valuationType === 2) {
+            // バッド評価を解除する
+            const result = await ValuationRequest(sender_user_id, tweet.tweet_id, -2);
+            if (result === -2) {
+                setBadcount(badcount - 1);
+                setValuationType(0);
+            }
+        } else {
+            if (valuationType === 1) {
+                // まずいいねを解除
+                const result = await ValuationRequest(sender_user_id, tweet.tweet_id, -1);
+                if (result === -1) {
+                    setLikecount(likecount - 1);
+                }
+            }
+            // 次にバッド評価を設定
+            const result = await ValuationRequest(sender_user_id, tweet.tweet_id, 2);
+            if (result === 2) {
+                setBadcount(badcount + 1);
+                setValuationType(2);
+            }
+        }
+    };
     return (
-        <div className="good-button-container">
-            <button onClick={handleButtonClick} className={`heart-button ${valuationType === 1 ? 'liked' : ''}`}>
-                <FaHeart/>
-            </button>
-            {likecount}
+        <div className="button-container">
+            <div className="good-button-container">
+                <button onClick={handleGoodButtonClick} className={`good-button ${valuationType === 1 ? 'liked' : ''}`}>
+                    <FaThumbsUp/>
+                </button>
+                {likecount}
+            </div>
+            <div className="bad-button-container">
+                <button onClick={handleBadButtonClick} className={`bad-button ${valuationType === 2 ? 'hated' : ''}`}>
+                    <FaThumbsDown/>
+                </button>
+                {badcount}
+            </div>
         </div>
     );
 }

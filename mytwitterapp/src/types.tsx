@@ -12,6 +12,7 @@ export type TweetData = {
     re_tweet_id: number;
     created_at: Date;
     likecount: number;
+    badcount: number;
 }
 
 export type HomePageProps = {
