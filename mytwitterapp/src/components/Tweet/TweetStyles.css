@@ -21,7 +21,9 @@ body {
     border-bottom: 1px solid #e1e8ed;
     padding: 10px 0;
 }
-
+.tweet :hover {
+    background-color: #aaa;
+}
 .tweet:last-child {
     border-bottom: none;
 }

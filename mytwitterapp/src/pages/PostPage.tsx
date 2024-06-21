@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import TweetForm from '../components/Tweet/TweetForm'
+import {TweetForm} from '../components/Tweet/TweetForm'
 import { PostPageProps } from '../types';
 import './PostPage.css';
 import { useNavigate } from 'react-router-dom';

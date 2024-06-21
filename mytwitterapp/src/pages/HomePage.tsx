@@ -1,11 +1,12 @@
-import React, { useEffect,useState } from 'react';
-import {HomePageProps, UserInfo} from '../types';
-import {TweetList} from '../components/Tweet/TweetList'
-import LogoutForm from '../components/Auth/Logout'
+import React, { useEffect, useState } from 'react';
+import { HomePageProps } from '../types';
+import { TweetList } from '../components/Tweet/TweetList';
+import LogoutForm from '../components/Auth/Logout';
 import { Link } from 'react-router-dom';
-import {FaPlus} from 'react-icons/fa';
+import { FaPlus, FaTwitter } from 'react-icons/fa';
 import './HomePage.css';
-const HomePage: React.FC<HomePageProps> = ({data}) => {
+
+const HomePage: React.FC<HomePageProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -39,23 +40,25 @@ const HomePage: React.FC<HomePageProps> = ({data}) => {
 
   return (
     <div>
-      <div className='header'>
-        <div className='header-left'>
-          <h1>Welcome to Twitter!</h1>
-        </div>
-        <div className='header-right'>
+      <div className="header">
+        <div className="header-left">
           {data && (
             <div>
-              <p className='user-name'>Logged in as: {data.user_name}</p>
+              <p className="user-name">Logged in as: {data.user_name}</p>
             </div>
           )}
+        </div>
+        <div className="header-center">
+          <FaTwitter size={40} className="twitter-icon" />
+        </div>
+        <div className="header-right">
           <LogoutForm />
-          <Link to='/post' className='new-tweet-button'>
-            <FaPlus size={30} />
+          <Link to="/post" className="new-tweet-button">
+            <FaPlus />
           </Link>
         </div>
       </div>
-      <div className='content'>
+      <div className="content">
         <TweetList user_id={data?.user_id} />
       </div>
       {loading && (
@@ -66,4 +69,5 @@ const HomePage: React.FC<HomePageProps> = ({data}) => {
     </div>
   );
 };
+
 export default HomePage;

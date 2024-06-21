@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { fireAuth } from './FirebaseConfig';
+import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [username, setUsername] = useState<string>('');
-
+  const navigate = useNavigate();
   const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault();
     setError('');
@@ -29,7 +30,7 @@ const RegisterForm: React.FC = () => {
             body: JSON.stringify({ email: email, user_name:username}),
         });
         if (!response.ok) {
-            throw new Error("FAiled to send register request");
+            throw new Error("Failed to send register request");
         }
         console.log("register request sent successfully");
     }catch (error){

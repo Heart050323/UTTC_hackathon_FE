@@ -1,19 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import { BrowserRouter, Routes, Route, useNavigate} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate,useLocation} from 'react-router-dom';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import {fireAuth} from './components/Auth/FirebaseConfig';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import HomePage from './pages/HomePage';
 import PostPage from './pages/PostPage';
+import RePostPage from './pages/RePostPage';
+import ReplyPage from './pages/ReplyPage'
+import { TweetPage } from './pages/TweetPage';
 import { UserInfo } from './types';
-
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import './App.css'
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<UserInfo | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     const sendUserInfoRequest = async (email:string | null) => {
       setLoading(true);
@@ -64,12 +69,23 @@ const App: React.FC = () => {
               </div>
   }
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<SignUpPage />} />
-      <Route path="/" element = {<HomePage data = {data}/>} />
-      <Route path="/post" element = {<PostPage data = {data}/>} />
-    </Routes>
+    <TransitionGroup>
+      <CSSTransition
+        key={location.key}
+        classNames="fade"
+        timeout={300}
+      >
+        <Routes location={location}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<SignUpPage />} />
+          <Route path="/" element={<HomePage data={data} />} />
+          <Route path="/post" element={<PostPage data={data} />} />
+          <Route path="/repost" element={<RePostPage data={data} />} />
+          <Route path="/reply" element={<ReplyPage data={data} />} />
+          <Route path="/tweetpage" element={<TweetPage data={data} />} />
+        </Routes>
+      </CSSTransition>
+    </TransitionGroup>
   );
 };
 const Root: React.FC = () => (

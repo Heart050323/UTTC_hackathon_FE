@@ -1,0 +1,81 @@
+.reply-button, .retweet-button, .good-button, .bad-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    font-size: 14px;
+    color: gray;
+    background-color: transparent !important;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.reply-button:hover, .retweet-button:hover, .good-button:hover, .bad-button:hover {
+    color: #1da1f2; /* Twitter's primary blue color */
+    background-color: transparent !important;
+}
+
+.retweet-button:hover {
+    color: lightgreen; /* リツイートボタンのホバー時の色 */
+}
+
+.good-button.liked {
+    color: red;
+}
+
+.bad-button.hated {
+    color: blue;
+}
+
+.retweet-button.retweeted {
+    color: rgb(7, 255, 7);
+}
+.button-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    background-color: transparent !important;
+}
+
+.good-button-container, .bad-button-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: transparent !important;
+}
+
+.reply-button svg, .retweet-button svg, .good-button svg, .bad-button svg {
+    width: 16px; /* アイコンのサイズを統一 */
+    height: 16px; /* アイコンのサイズを統一 */
+    margin-right: 5px;
+}
+
+span.count {
+    color: gray; /* カウント表示の色を灰色に設定 */
+}
+
+.retweet-options {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    position: absolute;
+    margin-top: 5px;
+}
+
+.retweet-options button {
+    padding: 10px;
+    font-size: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color:black
+}
+
+.retweet-options button:hover {
+    background-color: darkgray;
+}

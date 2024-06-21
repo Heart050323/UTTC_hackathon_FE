@@ -1,0 +1,113 @@
+/* TweetStyles.css */
+
+.tweet-form-container,
+.reply-tweet-form-container,
+.retweet-form-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tweet-form-textarea,
+.reply-tweet-form-textarea,
+.retweet-form-textarea {
+  margin-bottom: 10px;
+}
+
+.tweet-form-group,
+.reply-tweet-form-group,
+.retweet-form-group {
+  margin-bottom: 10px;
+}
+
+.tweet-form-user,
+.reply-tweet-form-user,
+.retweet-form-user {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  resize: vertical;
+  font-family: Arial, sans-serif;
+}
+
+.post-button,
+.button {
+  text-align: right;
+}
+
+button[type="submit"] {
+  background-color: #1da1f2;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0d8ddb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"]:active {
+  background-color: #1a91da;
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+/* Styles for ReTweetedTweet */
+.retweetedtweet {
+  margin-left: 20px;
+  padding: 10px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  background-color: #f5f8fa;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for RepliedTweet connection */
+.reply-tweet-form-container {
+  position: relative;
+  padding-left: 40px; /* Space for the line */
+}
+
+.reply-tweet-form-container::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  width: 2px;
+  height: calc(100% - 20px);
+  background-color: #e1e8ed;
+}
+
+.reply-tweet-form-container .replied-tweet {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  background-color: #f5f8fa;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-left: -40px; /* Adjust for the padding */
+}
