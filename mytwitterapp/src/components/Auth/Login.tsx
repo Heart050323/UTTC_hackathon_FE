@@ -10,7 +10,6 @@ const LoginForm: React.FC = () => {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
     setError('');
-    //comiit用
     try {
       await fireAuth.signInWithEmailAndPassword(email, password);
       alert('Logged in successfully!');
@@ -56,7 +55,7 @@ const LoginForm: React.FC = () => {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
-        <button type="submit" className="button">ログイン</button>
+        <button type="submit" className="Auth-button">ログイン</button>
       </form>
       {loggedInEmail && <p className="logged-in-message">{loggedInEmail} がログインしました。</p>}
     </div>

@@ -10,7 +10,9 @@ export const TweetForm :React.FC<PostPageProps> = ({data}) => {
     const [reTweetID, setReTweetID] = useState<number>(0);
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
-
+    const handleUserProfilePage = async(user_id: number | undefined) =>{
+        navigate('/profilepage', { state: { user_id } });
+    }  
     const handlePost = async (event: React.FormEvent) => {
         event.preventDefault();
         setError('');
@@ -46,7 +48,7 @@ export const TweetForm :React.FC<PostPageProps> = ({data}) => {
             <div className="tweet-form-textarea">
             {data && (
                 <div className="tweet-form-user">
-                <p>{data.user_name}</p>
+                <p onClick={(e) => { e.stopPropagation(); handleUserProfilePage(data.user_id)}}>{data.user_name}</p>
                 </div>
             )}
             <div className="tweet-form-group">
@@ -73,6 +75,9 @@ export const ReplyTweetForm :React.FC<ReTweetProps> = ({data,tweet} ) => {
     const [reTweetID, setReTweetID] = useState<number>(0);
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
+    const handleUserProfilePage = async(user_id: number | undefined) =>{
+        navigate('/profilepage', { state: { user_id } });
+    }  
     useEffect(() => {
         setRepliedTweetID(tweet.tweet_id);
         setSenderUserID(data?.user_id);
@@ -113,7 +118,7 @@ export const ReplyTweetForm :React.FC<ReTweetProps> = ({data,tweet} ) => {
                 <div className="reply-tweet-form-textarea">
                 {data && (
                     <div className="reply-tweet-form-user">
-                    <p>{data.user_name}</p>
+                    <p onClick={(e) => { e.stopPropagation(); handleUserProfilePage(data.user_id)}}>{data.user_name}</p>
                     </div>
                 )}
                 <div className="reply-tweet-form-group">
@@ -139,6 +144,9 @@ export const ReTweetForm :React.FC<ReTweetProps> = ({data,tweet} ) => {
     const [reTweetID, setReTweetID] = useState<number>(0);
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
+    const handleUserProfilePage = async(user_id: number | undefined) =>{
+        navigate('/profilepage', { state: { user_id } });
+    }  
     useEffect(() => {
         setReTweetID(tweet.tweet_id);
         setSenderUserID(data?.user_id);
@@ -178,7 +186,7 @@ export const ReTweetForm :React.FC<ReTweetProps> = ({data,tweet} ) => {
                 <div className="retweet-form-textarea">
                 {data && (
                     <div className="retweet-form-user">
-                    <p>{data.user_name}</p>
+                    <p onClick={(e) => { e.stopPropagation(); handleUserProfilePage(data.user_id)}}>{data.user_name}</p>
                     </div>
                 )}
                 <div className="retweet-form-group">

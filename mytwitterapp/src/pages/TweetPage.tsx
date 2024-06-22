@@ -63,7 +63,7 @@ export const TweetPage: React.FC<TweetPageProps> = ({data})=> {
                 </div>
             </div>
         )}
-        <div>
+        <div className="tweetpage-reply-tweet-list">
         {tweet.replycount > 0 && <ReplyTweetList replied_tweet_id={tweet.tweet_id} user_id={data?.user_id}/>}
         </div>
     </div>

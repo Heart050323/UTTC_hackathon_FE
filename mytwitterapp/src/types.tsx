@@ -24,6 +24,11 @@ export type TweetData = {
     re_tweetcount:number;
 }
 
+export type UserProfile = {
+    user_id: number;
+    user_name:string;
+    status_message:string | null;
+}
 export type HomePageProps = {
     data: UserInfo | null;
 }
@@ -44,6 +49,9 @@ export type ReplyPageProps = {
     data: UserInfo | null;
 } 
 
+export type ProfilePageProps = {
+    data: UserInfo | null;
+} 
 export type ReTweetProps = {
     data: UserInfo | null;
     tweet: TweetData;

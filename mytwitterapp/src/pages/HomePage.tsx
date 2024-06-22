@@ -2,13 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { HomePageProps } from '../types';
 import { TweetList } from '../components/Tweet/TweetList';
 import LogoutForm from '../components/Auth/Logout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaPlus, FaTwitter } from 'react-icons/fa';
 import './HomePage.css';
 
 const HomePage: React.FC<HomePageProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (data?.user_id === 0) {
+      window.location.reload();
+    }
+  }, [data?.user_id]);
+  
   useEffect(() => {
     let lastScrollY = 0;
     let lastTimestamp = performance.now();
@@ -38,13 +45,17 @@ const HomePage: React.FC<HomePageProps> = ({ data }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleUserProfilePage = async(user_id: number | undefined) =>{
+    navigate('/profilepage', { state: { user_id } });
+  }   
+  
   return (
     <div>
       <div className="header">
         <div className="header-left">
           {data && (
             <div>
-              <p className="user-name">Logged in as: {data.user_name}</p>
+              <p className="user-name" onClick={(e) => { e.stopPropagation(); handleUserProfilePage(data.user_id)}}>{data.user_name}</p>
             </div>
           )}
         </div>

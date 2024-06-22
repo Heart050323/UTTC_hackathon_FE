@@ -12,6 +12,7 @@ import { TweetPage } from './pages/TweetPage';
 import { UserInfo } from './types';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './App.css'
+import { ProfilePage } from './pages/ProfilePage';
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [email, setEmail] = useState<string | null>(null);
@@ -83,6 +84,7 @@ const App: React.FC = () => {
           <Route path="/repost" element={<RePostPage data={data} />} />
           <Route path="/reply" element={<ReplyPage data={data} />} />
           <Route path="/tweetpage" element={<TweetPage data={data} />} />
+          <Route path='/profilepage' element={<ProfilePage data={data}/>}/>
         </Routes>
       </CSSTransition>
     </TransitionGroup>
