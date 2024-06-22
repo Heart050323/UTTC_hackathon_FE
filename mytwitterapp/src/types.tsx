@@ -3,6 +3,13 @@ export type UserInfo = {
     user_name: string;
 }
 
+// export type UserProfile = {
+//     message: string;
+//     icon_image: URL;
+//     header_image: URL;
+//     birth_day:
+// }
+
 export type TweetData = {
     user_id: number;
     user_name:string;

@@ -33,11 +33,11 @@
   
   /* リツイートコンテンツのコンテナスタイル */
   .re-tweet-container {
-    padding: 0px;
+    padding: 10px;
     border: 1px solid #eee;
     border-radius: 6px;
     background-color: #f5f5f5;
-    margin-top: 0px;
+    margin-top: 10px;
     transition: background-color 0.3s;
   }
   

@@ -166,6 +166,11 @@ export const ReTweetedTweet: React.FC<{ re_tweet_id: number ,user_id : number | 
                     <p className="tweet-user">{reTweetData.user_name}</p>
                     <p className='tweet-content'>{reTweetData.content}</p>
                     <p className='tweet-time'>{new Date(reTweetData.created_at).toLocaleString()}</p>
+                    {reTweetData.re_tweet_id !== 0 && (
+                    <div className='re-tweet-container'>
+                        <ReTweetedTweet re_tweet_id={reTweetData.re_tweet_id} user_id={user_id} />
+                    </div>
+                    )}
                 </div>
             )}
         </div>
@@ -263,10 +268,15 @@ export const ReplyTweetList: React.FC<{ replied_tweet_id: number, user_id: numbe
                                 <ReTweetButton sender_user_id = {user_id} tweet = {tweet}/>
                             </div>
                         </div>
+                        {tweet.replycount > 0 && (
+                        <div>
                         <button className='viewReply-button' onClick={(e) => { e.stopPropagation(); toggleReplyView(tweet.tweet_id); }}>
-                            {selectedTweetID === tweet.tweet_id ? 'Close Reply' : 'View Reply'}</button>
+                            {selectedTweetID === tweet.tweet_id ? '返信を閉じる' : '返信を見る'}
+                        </button>
                             {selectedTweetID === tweet.tweet_id && <ReplyTweetList replied_tweet_id={selectedTweetID} user_id={user_id}/>}
-                    </div>
+                        </div>
+                        )}
+                            </div>
                 ))
             )}
         </div>
