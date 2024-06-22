@@ -72,9 +72,9 @@
 }
   
   /* リツイートツイートコンテナのスタイル */
-  .retweeted-tweet-container:hover,
+  .retweeted-tweet-container,
   .replied-tweet-container {
-    margin-top: 0px;
+    padding: 10px !important;
     background-color: transparent !important;
   }
   .re-tweet-container:hover{

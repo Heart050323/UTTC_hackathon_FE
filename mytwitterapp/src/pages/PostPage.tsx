@@ -2,15 +2,16 @@ import React, {useState} from 'react';
 import {TweetForm} from '../components/Tweet/TweetForm'
 import { PostPageProps } from '../types';
 import './PostPage.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 const PostPage :React.FC<PostPageProps> = ({data}) => { 
     const navigate = useNavigate();
     return(
         <div className='post-page-container'>
             <div className='post-page-header'>
-                <button className='header-button cancel-button' onClick={() => navigate('/')}>
-                    キャンセル
-                </button>
+                <Link to="/" className="home">
+                    <FaArrowLeft className="icon" />
+                </Link>
             </div>
             <TweetForm data = {data}/>
         </div>

@@ -193,7 +193,7 @@ export const ReTweetForm :React.FC<ReTweetProps> = ({data,tweet} ) => {
                 </div>
                 </div>
                 {error && <p className="error">{error}</p>}
-                <div className="button">
+                <div className="post-button">
                 <button type="submit">投稿</button>
                 </div>
             </form>
