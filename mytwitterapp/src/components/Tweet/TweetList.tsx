@@ -86,7 +86,11 @@ export const TweetList: React.FC<UserIDProps> = ({user_id})=> {
 
     return (
         <div className="tweet-list-container">
-            {loading && <p>Loading...</p>}
+            {loading && 
+                <div className="loading-spinner-container">
+                    <div className="loading-spinner"></div>
+                </div>
+            }
             {tweetdata && (
                 tweetdata.map((tweet) => (
                     <div key={tweet.tweet_id} className="tweet" style={{ padding: '10px', borderBottom: '1px solid #e1e1e1', backgroundColor: 'transparent' }}>
@@ -160,7 +164,11 @@ export const ReTweetedTweet: React.FC<{ re_tweet_id: number ,user_id : number | 
 
     return (
         <div className="retweeted-tweet-container">
-            {loading && <p>Loading...</p>}
+            {loading && 
+                <div className="loading-spinner-container">
+                    <div className="loading-spinner"></div>
+                </div>
+            }
             {reTweetData && (
                 <div className="retweeted-tweet-container">
                     <p className="tweet-user">{reTweetData.user_name}</p>
@@ -198,7 +206,11 @@ export const RepliedTweet: React.FC<{ replied_tweet_id: number ,user_id : number
 
     return (
         <div className="replied-tweet-container">
-            {loading && <p>Loading...</p>}
+            {loading && 
+                <div className="loading-spinner-container">
+                    <div className="loading-spinner"></div>
+                </div>
+            }
             {repliedTweetData && (
                 <div>
                     <p className="tweet-user">{repliedTweetData.user_name}</p>
@@ -254,7 +266,11 @@ export const ReplyTweetList: React.FC<{ replied_tweet_id: number, user_id: numbe
     
     return (
         <div className='reply-container'>
-            {loading && <p>Loading...</p>}
+            {loading && 
+                <div className="loading-spinner-container">
+                    <div className="loading-spinner"></div>
+                </div>
+            }
             {replyTweetData && (
                 replyTweetData.map((tweet) => (
                     <div style={{ padding: '10px', borderBottom: '1px solid #e1e1e1', backgroundColor: 'transparent' }}>
